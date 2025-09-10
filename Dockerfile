@@ -1,12 +1,13 @@
-FROM library/alpine:3.19
-#FROM library/alpine:3.12
-#MAINTAINER craigtracey@gmail.com
+FROM library/alpine:3.22
 
-RUN apk update
-RUN apk add --no-cache bash
-RUN apk add ucarp
-RUN mkdir -p /etc/ucarp/
-COPY vip-*.sh /etc/ucarp/
-COPY run-ucarp.sh /bin/
+LABEL maintainer="shannon.carver@gmail.com"
 
-ENTRYPOINT ["/bin/bash", "/bin/run-ucarp.sh"]
+WORKDIR /app
+
+RUN apk add --no-cache bash ucarp
+
+COPY vip-*.sh run-ucarp.sh /app/
+RUN chmod +x vip-*.sh run-ucarp.sh
+
+#ENTRYPOINT ["/bin/bash", "/bin/run-ucarp.sh"]
+CMD ["./run-ucarp.sh"]
