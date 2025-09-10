@@ -1,4 +1,4 @@
-#!/usrbin/env bash
+#!/usr/bin/env bash
 
 # This variable will hold the PID of the background process
 child_pid=0
@@ -8,7 +8,8 @@ function cleanup() {
   echo "Graceful shutdown requested..."
 
   echo "Removing set VIP"
-  /app/vip-down.sh
+  echo /app/vip-down.sh "$UCARP_HOST_DEVICE" "$UCARP_VIP_ADDRESS"
+  /app/vip-down.sh "$UCARP_HOST_DEVICE" "$UCARP_VIP_ADDRESS"
 
   # If a child process is running, send it a SIGTERM
   if [ $child_pid -ne 0 ]; then
@@ -54,4 +55,11 @@ ucarp --interface="$UCARP_HOST_DEVICE" \
   --addr="$UCARP_VIP_ADDRESS" \
   --advskew="$UCARP_PRIORITY" \
   --preempt --shutdown --neutral \
-  --upscript=/app/vip-up.sh --downscript=/app/vip-down.sh
+  --upscript=/app/vip-up.sh --downscript=/app/vip-down.sh &
+
+# Capture the PID of the background process
+child_pid=$!
+
+# Wait for the child process to exit.
+# This is crucial; otherwise, the script would finish, and the container would stop.
+wait "$child_pid"
