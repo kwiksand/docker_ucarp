@@ -1,7 +1,7 @@
 docker-ucarp
 ============
 
-[![Super-Linter](https://github.com/<OWNER>/<REPOSITORY>/actions/workflows/<WORKFLOW_FILE_NAME>/badge.svg)](https://github.com/marketplace/actions/super-linter)
+[![Docker Image CI](https://github.com/kwiksand/docker_ucarp/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/kwiksand/docker_ucarp/actions/workflows/main.yml)
 
 Builds a basic ucarp enabled container, which creates a virtual (VRRP) IP (UCARP_VIP_ADDRESS) on the host interface (UCARP_HOST_DEVICE) using ucarp.
 
