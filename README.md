@@ -1,6 +1,8 @@
 docker-ucarp
 ============
 
+[![Super-Linter](https://github.com/<OWNER>/<REPOSITORY>/actions/workflows/<WORKFLOW_FILE_NAME>/badge.svg)](https://github.com/marketplace/actions/super-linter)
+
 Builds a basic ucarp enabled container, which creates a virtual (VRRP) IP (UCARP_VIP_ADDRESS) on the host interface (UCARP_HOST_DEVICE) using ucarp.
 
 
@@ -19,8 +21,7 @@ services:
   # Runs using the same config, but another container using hosts IP
   ucarp:
     container_name: dns-server_ucarp
-    image: quay.io/kwiksand/docker_ucarp 
-    build: /home/podmanager/containers/build_containers/docker_ucarp/
+    image: ghcr.io/kwiksand/docker_ucarp 
     #privileged: true
     security_opt:
       - seccomp:unconfined
@@ -63,16 +64,16 @@ spec:
   hostNetwork: true
   containers:
   - name: kube-ucarp-vip
-    image: ctracey/ucarp
+    image: ghcr.io/docker_ucarp
     securityContext:
       privileged: true
     env:
     - name: UCARP_VID
       value: "41"
+    - name: UCARP_HOST_DEVICE
+      value: "eth0"
     - name: UCARP_VIP_ADDRESS
       value: "1.1.1.1/24"
     - name: UCARP_PASSWORD
       value: "somepassword"
-    - name: UCARP_HOST_DEVICE
-      value: "eth0"
 ```
