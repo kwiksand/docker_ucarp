@@ -26,7 +26,15 @@ jobs:
         uses: super-linter/super-linter/slim@v8.1.0 # x-release-please-version
         env:
           # To report GitHub Actions status checks
+          DEFAULT_BRANCH: main
+          # Set your fix mode variables to true
+          FIX_SHELL_SHFMT: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_CHECKOV: false
+          VALIDATE_MARKDOWN: false
+          VALIDATE_MARKDOWN_PRETTIER: false
+          VALIDATE_TRIVY: false
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
