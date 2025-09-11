@@ -29,11 +29,13 @@ jobs:
           DEFAULT_BRANCH: main
           # Set your fix mode variables to true
           FIX_SHELL_SHFMT: true
+          FIX_MARKDOWN_PRETTIER: true
+          FIX_YAML_PRETTIER: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_CHECKOV: false
+          VALIDATE_GITHUB_ACTIONS_ZIZMOR: false
           VALIDATE_MARKDOWN: false
-          VALIDATE_MARKDOWN_PRETTIER: false
           VALIDATE_TRIVY: false
 
       - name: Login to GitHub Container Registry

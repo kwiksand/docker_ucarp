@@ -1,6 +1,7 @@
 FROM library/alpine:3.22
 LABEL maintainer="shannon.carver@gmail.com"
 
+# hadolint ignore=DL3018
 RUN apk add --no-cache bash ucarp
 
 WORKDIR /app/
