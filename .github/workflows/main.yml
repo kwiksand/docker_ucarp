@@ -7,17 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-push:
-    #runs-on: ubuntu-latest
-    runs-on: ${{ matrix.runner }}
-    strategy:
-      matrix:
-        platform: [amd64, arm64]
-        include:
-          - platform: amd64
-            runner: ubuntu-24.04
-          - platform: arm64
-            runner: ubuntu-24.04-arm
+  lint-test-syntax:
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write # Required for pushing to GHCR
@@ -46,6 +37,30 @@ jobs:
           VALIDATE_GITHUB_ACTIONS_ZIZMOR: false
           VALIDATE_MARKDOWN: false
           VALIDATE_TRIVY: false
+
+  build-and-push:
+    #runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        platform: [amd64, arm64]
+        include:
+          - platform: amd64
+            runner: ubuntu-24.04
+          - platform: arm64
+            runner: ubuntu-24.04-arm
+    permissions:
+      contents: read
+      packages: write # Required for pushing to GHCR
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          # super-linter needs the full git history to get the
+          # list of files that changed across commits
+          fetch-depth: 0
+          persist-credentials: false
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
