@@ -8,7 +8,16 @@ on:
 
 jobs:
   build-and-push:
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        platform: [amd64, arm64]
+        include:
+          - platform: amd64
+            runner: ubuntu-24.04
+          - platform: arm64
+            runner: ubuntu-24.04-arm
     permissions:
       contents: read
       packages: write # Required for pushing to GHCR
@@ -48,6 +57,7 @@ jobs:
       - name: Build and push Docker image
         run: |
           IMAGE_NAME=docker_ucarp
-          IMAGE_TAG=${{ github.sha }} # Or use 'latest' or a version number
-          docker build . --tag ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}:${IMAGE_TAG}
+          IMAGE_TAG=${{ github.sha }}-${{ matrix.platform }} # Or use 'latest' or a version number
+          IMAGE_TAG=latest-${{ matrix.platform }} # Or use 'latest' or a version number
+          docker build --platform linux/${{ matrix.platform }} --tag ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}:${IMAGE_TAG} .
           docker push ghcr.io/${{ github.repository_owner }}/${IMAGE_NAME}:${IMAGE_TAG}

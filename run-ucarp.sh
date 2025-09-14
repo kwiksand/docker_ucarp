@@ -47,8 +47,8 @@ if [ ${#MISSING_PARAMS[@]} -gt 0 ]; then
   exit 255
 fi
 
-echo ucarp --interface="$UCARP_HOST_DEVICE" --srcip="$UCARP_HOST_ADDRESS" --vhid="$UCARP_VID" --pass="$UCARP_PASSWORD" --addr="$UCARP_VIP_ADDRESS" --advskew="$UCARP_PRIORITY" --preempt --shutdown --neutral --upscript=/app/vip-up.sh --downscript=/app/vip-down.sh
-ucarp --interface="$UCARP_HOST_DEVICE" \
+echo /usr/sbin/ucarp --interface="$UCARP_HOST_DEVICE" --srcip="$UCARP_HOST_ADDRESS" --vhid="$UCARP_VID" --pass="$UCARP_PASSWORD" --addr="$UCARP_VIP_ADDRESS" --advskew="$UCARP_PRIORITY" --preempt --shutdown --neutral --upscript=/app/vip-up.sh --downscript=/app/vip-down.sh
+/usr/sbin/ucarp --interface="$UCARP_HOST_DEVICE" \
   --srcip="$UCARP_HOST_ADDRESS" \
   --vhid="$UCARP_VID" \
   --pass="$UCARP_PASSWORD" \
